@@ -1,0 +1,19 @@
+{% unless product.has_only_default_variant %}
+  {% for option in product.options_with_values %}
+    <fieldset data-option-position="{{ option.position }}">
+      <legend>{{ option.name | escape }}</legend>
+      {% for value in option.values %}
+        <input
+          type="radio"
+          id="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
+          name="{{ option.name | escape }}"
+          value="{{ value | escape }}"
+          {% if option.selected_value == value %}checked{% endif %}
+        >
+        <label for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}">
+          {{ value | escape }}
+        </label>
+      {% endfor %}
+    </fieldset>
+  {% endfor %}
+{% endunless %}

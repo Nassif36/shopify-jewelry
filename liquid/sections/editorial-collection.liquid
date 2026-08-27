@@ -1,0 +1,63 @@
+<section class="editorial-collection color-{{ section.settings.color_scheme }}">
+  <header>
+    {% if section.settings.eyebrow != blank %}
+      <p>{{ section.settings.eyebrow | escape }}</p>
+    {% endif %}
+    <h2>{{ section.settings.heading | escape }}</h2>
+  </header>
+
+  {% assign featured_collection = section.settings.collection %}
+  <div class="editorial-collection__grid">
+    {% for product in featured_collection.products limit: section.settings.products_to_show %}
+      {% render 'product-card', product: product %}
+    {% else %}
+      <p>{{ 'collections.general.no_matches' | t }}</p>
+    {% endfor %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Editorial collection",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Objects of affection"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "The current edit"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "label": "Products to show",
+      "min": 4,
+      "max": 12,
+      "step": 4,
+      "default": 8
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Editorial collection"
+    }
+  ]
+}
+{% endschema %}

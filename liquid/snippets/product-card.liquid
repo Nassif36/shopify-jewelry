@@ -1,0 +1,20 @@
+{% comment %}Portable card example for a Shopify theme implementation.{% endcomment %}
+<article class="product-card" data-product-id="{{ product.id }}">
+  <a href="{{ product.url }}">
+    {% if product.featured_image %}
+      {{ product.featured_image
+        | image_url: width: 900
+        | image_tag:
+          loading: 'lazy',
+          widths: '360, 540, 720, 900',
+          sizes: '(min-width: 990px) 25vw, 50vw',
+          alt: product.featured_image.alt | default: product.title
+      }}
+    {% endif %}
+    <h3>{{ product.title | escape }}</h3>
+    <span>{{ product.price | money }}</span>
+    {% if product.compare_at_price > product.price %}
+      <s>{{ product.compare_at_price | money }}</s>
+    {% endif %}
+  </a>
+</article>
